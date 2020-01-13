@@ -132,7 +132,7 @@ class ResetPasswordState extends State<ResetPassword> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: new Text(
-            "A password reset link has been sent to $_email",
+            "A Password reset link has been sent to $_email",
             textAlign: TextAlign.start,
             style: TextStyle(fontWeight: FontWeight.normal),
           ),
