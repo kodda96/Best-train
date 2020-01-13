@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'login_guest.dart';
+import 'new_account.dart';
 
 void main() => runApp(BestTrain());
 
@@ -20,6 +22,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -28,7 +31,7 @@ class MyHomePage extends StatelessWidget {
                     alignment: Alignment.center,
                     children: <Widget>[
                       new Container(
-                        margin: new EdgeInsets.only(bottom: 40.0),
+                        margin: new EdgeInsets.only(top: 110.0),
                         height: 60.0,
                         width: 60.0,
                         decoration: new BoxDecoration(
@@ -40,7 +43,7 @@ class MyHomePage extends StatelessWidget {
                         ),
                       ),
                       new Container(
-                        margin: new EdgeInsets.only(right: 50.0, top: 50.0),
+                        margin: new EdgeInsets.only(right: 50.0, top: 200.0),
                         height: 60.0,
                         width: 60.0,
                         decoration: new BoxDecoration(
@@ -52,7 +55,7 @@ class MyHomePage extends StatelessWidget {
                         ),
                       ),
                       new Container(
-                        margin: new EdgeInsets.only(left: 50.0, top: 50.0),
+                        margin: new EdgeInsets.only(left: 50.0, top: 200.0),
                         height: 60.0,
                         width: 60.0,
                         decoration: new BoxDecoration(
@@ -69,7 +72,7 @@ class MyHomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0, bottom: 80.0),
+                        padding: const EdgeInsets.only(top: 10.0, bottom: 80.0),
                         child: new Text(
                           "BestTrain",
                           style: new TextStyle(fontSize: 30.0),
@@ -81,16 +84,29 @@ class MyHomePage extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 20.0,right: 10.0, top: 10.0),
-                          child: new Container(
-                            margin: EdgeInsets.only(right: 30.0, left: 30.0),
-                            alignment: Alignment.center,
-                            height: 70.0,
-                            decoration: new BoxDecoration(
-                                color: Color(0xFF18D191),
-                                borderRadius: new BorderRadius.circular(10.0)),
-                            child: new Text("Login", style: new TextStyle(
-                                fontSize: 20.0, color: Colors.white)),
+                          padding: const EdgeInsets.only(
+                              left: 20.0, right: 10.0, top: 5.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginPage(),
+                                  ));
+                            },
+                            child: new Container(
+                              margin: EdgeInsets.only(
+                                  right: 30.0, left: 30.0, top: 10.0),
+                              alignment: Alignment.center,
+                              height: 70.0,
+                              decoration: new BoxDecoration(
+                                  color: Color(0xFF18D191),
+                                  borderRadius: new BorderRadius.circular(
+                                      10.0)),
+                              child: new Text("Login",
+                                  style: new TextStyle(
+                                      fontSize: 20.0, color: Colors.white)),
+                            ),
                           ),
                         ),
                       )
@@ -100,21 +116,53 @@ class MyHomePage extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 20.0,right: 10.0, top: 10.0),
-                          child: new Container(
-                            margin: EdgeInsets.only(right: 30.0, left: 30.0),
-                            alignment: Alignment.center,
-                            height: 70.0,
-                            decoration: new BoxDecoration(
-                                color: Color(0xFF18D191),
-                                borderRadius: new BorderRadius.circular(10.0)),
-                            child: new Text("Login As a Guest", style: new TextStyle(
-                                fontSize: 20.0, color: Colors.white)),
+                          padding: const EdgeInsets.only(
+                              left: 20.0, right: 10.0, top: 10.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginAsGuest(),
+                                  ));
+                            },
+                            child: new Container(
+                              margin: EdgeInsets.only(right: 30.0, left: 30.0),
+                              alignment: Alignment.center,
+                              height: 70.0,
+                              decoration: new BoxDecoration(
+                                  color: Color(0xFF18D191),
+                                  borderRadius: new BorderRadius.circular(
+                                      10.0)),
+                              child: new Text("Login As a Guest",
+                                  style: new TextStyle(
+                                      fontSize: 20.0, color: Colors.white)),
+                            ),
                           ),
                         ),
                       )
-                      //hey
                     ],
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 30.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) => SignUp()));
+                            },
+                            child: new Text("Create A New Account",
+                                style: new TextStyle(
+                                    fontSize: 20.0,
+                                    color: Color(0xFF18D191),
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ])));
   }

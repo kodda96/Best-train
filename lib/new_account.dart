@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'stacked_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'registered_user.dart';
-import 'reset_password.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
-class LoginPage extends StatefulWidget {
+class SignUp extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => LoginPageState();
+  State<StatefulWidget> createState() => CreateNewAccount();
 }
 
-class LoginPageState extends State<LoginPage> {
+class CreateNewAccount extends State<SignUp> {
   final formKey = new GlobalKey<FormState>();
 
   String _email;
@@ -30,7 +29,8 @@ class LoginPageState extends State<LoginPage> {
     if (validateAndSave()) {
       try {
         FirebaseUser user = (await FirebaseAuth.instance
-                .signInWithEmailAndPassword(email: _email, password: _password))
+                .createUserWithEmailAndPassword(
+                    email: _email, password: _password))
             .user;
         print('Signed in: ${user.uid}');
         Navigator.push(
@@ -50,13 +50,13 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        iconTheme: new IconThemeData(color: Color(0xFF18D191)),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
+        appBar: new AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          iconTheme: new IconThemeData(color: Color(0xFF18D191)),
+        ),
+        body: SingleChildScrollView(
+          child: Container(
             width: double.infinity,
             child: new Form(
               key: formKey,
@@ -83,9 +83,10 @@ class LoginPageState extends State<LoginPage> {
                           horizontal: 20.0, vertical: 0.0),
                       child: new TextFormField(
                         decoration: new InputDecoration(
-                            labelText: "Email",
-                            labelStyle: new TextStyle(fontSize: 20.0),
-                            errorStyle: TextStyle(fontSize: 15.0)),
+                          labelText: "Email Address",
+                          labelStyle: new TextStyle(fontSize: 20.0),
+                          errorStyle: TextStyle(fontSize: 15.0),
+                        ),
                         validator: (value) =>
                             value.isEmpty ? 'Email can\'t be empty' : null,
                         onSaved: (value) => _email = value,
@@ -100,61 +101,46 @@ class LoginPageState extends State<LoginPage> {
                       child: new TextFormField(
                         obscureText: true,
                         decoration: new InputDecoration(
-                            labelText: "Password",
-                            labelStyle: new TextStyle(fontSize: 20.0),
-                            errorStyle: TextStyle(fontSize: 15.0)),
-                        validator: (value) =>
-                            value.isEmpty ? 'Password can\'t be empty' : null,
+                          labelText: "Password",
+                          labelStyle: new TextStyle(fontSize: 20.0),
+                          errorStyle: TextStyle(fontSize: 15.0),
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Password can\'t be empty';
+                          } else if (value.length < 6) {
+                            return 'Password should be at least 6 characters';
+                          }
+                          return null;
+                        },
                         onSaved: (value) => _password = value,
                       ),
                     ),
-                    new Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Expanded(
-                            child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 20.0, right: 5.0, top: 30.0),
-                                child: new Container(
-                                    alignment: Alignment.center,
-                                    height: 60.0,
-                                    decoration: new BoxDecoration(
-                                        color: Color(0xFF18D191),
-                                        borderRadius:
-                                            new BorderRadius.circular(9.0)),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        validateAndSubmit();
-                                      },
-                                      child: new Text("Login",
-                                          style: new TextStyle(
-                                              fontSize: 20.0,
-                                              color: Colors.white)),
-                                    ))),
-                          ),
-                          Expanded(
-                            child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 20.0, right: 5.0, top: 30.0),
-                                child: GestureDetector(
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) => ResetPassword()));
-                                  },
-                                  child: new Container(
-                                      alignment: Alignment.center,
-                                      height: 60.0,
-                                      child: new Text("Forgot Password",
-                                          style: new TextStyle(
-                                              fontSize: 20.0,
-                                              color: Color(0xFF18D191)))),
-                                )),
-                          )
-                        ]),
+                    new SizedBox(
+                      height: 15.0,
+                    ),
+                    new Container(
+                      margin:
+                          EdgeInsets.only(top: 50.0, right: 30.0, left: 30.0),
+                      alignment: Alignment.center,
+                      height: 70.0,
+                      width: 200.0,
+                      decoration: new BoxDecoration(
+                          color: Color(0xFF18D191),
+                          borderRadius: new BorderRadius.circular(10.0)),
+                      child: GestureDetector(
+                        onTap: () {
+                          validateAndSubmit();
+                        },
+                        child: new Text("Sign Up",
+                            style: new TextStyle(
+                                fontSize: 20.0, color: Colors.white)),
+                      ),
+                    )
                   ]),
-            )),
-      ),
-    );
+            ),
+          ),
+        ));
   }
 
   Widget showAlert() {
